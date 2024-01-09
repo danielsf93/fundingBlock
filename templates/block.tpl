@@ -3,11 +3,15 @@
 <div class="pkp_block block_madeBy">
     <h3>{translate key="Dados de financiamento"}</h3>
 
-       {if $funders|@count > 0}
-        
+    {if $funders|@count > 0}
         <ul>
             {foreach from=$funders item=funder}
-                <li>{$funder|escape}</li>
+                {if $funder.submission_id == $publication->getId()|escape}
+                    <li>
+                        Funder ID: {$funder.funder_id|escape}<br>
+                        Submission ID: {$funder.submission_id|escape}
+                    </li>
+                {/if}
             {/foreach}
         </ul>
     {else}
@@ -16,3 +20,4 @@
 
     id: {$publication->getId()|escape}
 </div>
+

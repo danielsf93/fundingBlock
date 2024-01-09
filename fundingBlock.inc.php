@@ -52,15 +52,16 @@ class fundingBlock extends BlockPlugin {
         $pdo = new PDO("mysql:host={$this->databaseHost};dbname={$this->databaseName}", $this->databaseUsername, $this->databasePassword);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $query = "SELECT setting_value FROM funder_settings";
+        $query = "SELECT funder_id, submission_id FROM funders";
         $stmt = $pdo->query($query);
-        $funders = $stmt->fetchAll(PDO::FETCH_COLUMN);
+        $funders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return $funders;
     } catch (PDOException $e) {
         return [];
     }
 }
+
 
 //////funcoes obrigatorias do ojs
 	/**
