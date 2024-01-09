@@ -3,11 +3,8 @@
 <div class="pkp_block block_madeBy">
     <h3>{translate key="Dados de financiamento"}</h3>
 
-    <b>{$totalDownloads}</b> {translate key="Downloads"}<br>
-    <b>{$totalAcess}</b> {translate key="Acessos"}<br>
-
-    {if $funders|@count > 0}
-        <h4>{translate key="Lista de financiadores:"}</h4>
+       {if $funders|@count > 0}
+        
         <ul>
             {foreach from=$funders item=funder}
                 <li>{$funder|escape}</li>

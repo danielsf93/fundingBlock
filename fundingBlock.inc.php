@@ -31,8 +31,7 @@ class fundingBlock extends BlockPlugin {
 
 		// Chama a função para obter o número de revistas.
          
-        $totalAcess = $this->totalAcess();   
-        $totalDownloads = $this->totalDownloads(); 
+       
         $funders = $this->getFunders();
         
         $templateMgr->assign([
@@ -40,8 +39,6 @@ class fundingBlock extends BlockPlugin {
         'madeByText' => 'Estatísticas do portal:',
         // Variável que contém o número de revistas.
        
-        'totalAcess' =>$totalAcess,
-        'totalDownloads' =>$totalDownloads,
         'funders' => $funders, 
         
     ]);
@@ -49,50 +46,13 @@ class fundingBlock extends BlockPlugin {
     return parent::getContents($templateMgr, $request);
     }
 
-
-    //funcao que pega o numero total de downloads ao portal
-public function totalDownloads() {
-    try {
-        $pdo = new PDO("mysql:host={$this->databaseHost};dbname={$this->databaseName}", $this->databaseUsername, $this->databasePassword);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-// Soma os valores da coluna 'metric' onde 'assoc_type' contém 256 ou 1048585.
-//515 = downloads
-        $query = "SELECT SUM(metric) as total FROM metrics WHERE assoc_type IN (515)"; 
-        $stmt = $pdo->query($query);
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        $totalDownloads = $result['total'];
-
-        return $totalDownloads;
-    } catch (PDOException $e) {
-        return "Erro ao conectar ao banco de dados: " . $e->getMessage();
-    }
-}
-
-//funcao que pega o numero total de acessos ao portal
-    public function totalAcess() {
-        try {
-            $pdo = new PDO("mysql:host={$this->databaseHost};dbname={$this->databaseName}", $this->databaseUsername, $this->databasePassword);
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    // Soma os valores da coluna 'metric' onde 'assoc_type' contém 256 ou 1048585.
-    //256 = visitas ao home de cada revista
-    //1048585 = visitas as páginas de artigos
-            $query = "SELECT SUM(metric) as total FROM metrics WHERE assoc_type IN (256, 1048585)"; 
-            $stmt = $pdo->query($query);
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            $totalAcess = $result['total'];
-
-            return $totalAcess;
-        } catch (PDOException $e) {
-            return "Erro ao conectar ao banco de dados: " . $e->getMessage();
-        }
-    }
     public function getFunders()
 {
     try {
         $pdo = new PDO("mysql:host={$this->databaseHost};dbname={$this->databaseName}", $this->databaseUsername, $this->databasePassword);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $query = "SELECT funder_identification FROM funders";
+        $query = "SELECT setting_value FROM funder_settings";
         $stmt = $pdo->query($query);
         $funders = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
