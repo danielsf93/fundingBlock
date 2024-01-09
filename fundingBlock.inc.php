@@ -33,7 +33,7 @@ class fundingBlock extends BlockPlugin {
          
         $totalAcess = $this->totalAcess();   
         $totalDownloads = $this->totalDownloads(); 
-          
+        $funders = $this->getFunders();
         
         $templateMgr->assign([
         // Variável com texto simples.
@@ -42,6 +42,7 @@ class fundingBlock extends BlockPlugin {
        
         'totalAcess' =>$totalAcess,
         'totalDownloads' =>$totalDownloads,
+        'funders' => $funders, 
         
     ]);
     
@@ -85,7 +86,21 @@ public function totalDownloads() {
             return "Erro ao conectar ao banco de dados: " . $e->getMessage();
         }
     }
+    public function getFunders()
+{
+    try {
+        $pdo = new PDO("mysql:host={$this->databaseHost};dbname={$this->databaseName}", $this->databaseUsername, $this->databasePassword);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+        $query = "SELECT funder_identification FROM funders";
+        $stmt = $pdo->query($query);
+        $funders = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+        return $funders;
+    } catch (PDOException $e) {
+        return [];
+    }
+}
 
 //////funcoes obrigatorias do ojs
 	/**
