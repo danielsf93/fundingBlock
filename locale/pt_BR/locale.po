@@ -6,7 +6,7 @@ msgstr ""
 "PO-Revision-Date: 2020-06-03 18:03+0000\n"
 "Last-Translator: Daniel Silva Ferreira <daniel.ferreira@abcd.usp.br>\n"
 "Language-Team: Portuguese (Brazil) <http://translate.pkp.sfu.ca/projects/ojs/"
-"blocks-deepStat/pt_BR/>\n"
+"blocks-fundingBlock/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -14,26 +14,14 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 3.9.1\n"
 
-msgid "plugins.block.deepStat.displayName"
-msgstr "Estatísticas do Portal"
+msgid "plugins.block.fundingBlock.displayName"
+msgstr "FundingBlock"
 
-msgid "plugins.block.deepStat.description"
-msgstr "Este plugin demonstra as estatísticas gerais do portal de revistas OJS. Foi desenvolvido para ser exibido na página inicial do portal."
+msgid "plugins.block.fundingBlock.description"
+msgstr "Plugin que mostra dados de financiamento de publicações. Funciona em conjunto do plugin Funding"
 
-msgid "plugins.block.deepStat.title"
-msgstr "Estatísticas Gerais:"
+msgid "plugins.block.fundingBlock.title"
+msgstr "Dados de financiamento:"
 
-msgid "plugins.block.deepStat.journals"
-msgstr "Revistas"
-
-msgid "plugins.block.deepStat.issues"
-msgstr "Fascículos"
-
-msgid "plugins.block.deepStat.articles"
-msgstr "Artigos"
-
-msgid "plugins.block.deepStat.downloads"
-msgstr "Downloads"
-
-msgid "plugins.block.deepStat.hits"
-msgstr "Acessos"
+msgid "plugins.block.fundingBlock.noid"
+msgstr "Sem ID disponível."

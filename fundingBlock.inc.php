@@ -80,10 +80,10 @@ class fundingBlock extends BlockPlugin {
 	}
 
 	function getDisplayName() {
-		return __('FundingBlock');
+		return 'fundingBlock';
 	}
     function getDescription() {
-		return __('fundingBlock');
+		return __('plugins.block.fundingBlock.description');
 	}
 }
 

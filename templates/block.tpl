@@ -5,7 +5,7 @@
     
     {if isset($publication) && $publication->getId()|default:false}
         {if $funders|@count > 0}
-            <h3>{translate key="Dados de financiamento"}</h3>
+            <h3>{translate key="plugins.block.fundingBlock.title"}</h3>
             <ul>
                 {foreach from=$funders item=funder}
                     {if $funder.submission_id == $publication->getId()|escape}
@@ -24,6 +24,6 @@
             <p>{translate key="Nenhum financiador encontrado."}</p>
         {/if}
     {else}
-        <p>{translate key="Sem ID disponível."}</p>
+        <p>{translate key="plugins.block.fundingBlock.noid"}</p>
     {/if}
 </div>
