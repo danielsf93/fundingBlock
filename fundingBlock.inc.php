@@ -52,11 +52,23 @@ class fundingBlock extends BlockPlugin {
         $pdo = new PDO("mysql:host={$this->databaseHost};dbname={$this->databaseName}", $this->databaseUsername, $this->databasePassword);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $query = "SELECT funder_id, submission_id FROM funders";
-        $stmt = $pdo->query($query);
-        $funders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        // Passo 1: Obter funders da tabela 'funders'
+        $queryFunders = "SELECT funder_id, submission_id FROM funders";
+        $stmtFunders = $pdo->query($queryFunders);
+        $funders = $stmtFunders->fetchAll(PDO::FETCH_ASSOC);
 
-        return $funders;
+        // Passo 2: Obter settings da tabela 'funder_settings' usando os funder_ids obtidos anteriormente
+        $settings = [];
+        foreach ($funders as $funder) {
+            $querySettings = "SELECT setting_value FROM funder_settings WHERE funder_id = {$funder['funder_id']}";
+            $stmtSettings = $pdo->query($querySettings);
+            $settingValue = $stmtSettings->fetchColumn();
+            $settings[$funder['funder_id']] = $settingValue;
+        }
+
+        // Retornar um array contendo funders e settings
+        return ['funders' => $funders, 'settings' => $settings];
+
     } catch (PDOException $e) {
         return [];
     }
