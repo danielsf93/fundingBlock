@@ -11,18 +11,20 @@
                     {if $funder.submission_id == $publication->getId()|escape}
                         {assign var="foundFunders" value=true}
                         <li>
+                            Submission ID: <b>{$funder.submission_id|escape}</b><br>
+
                             Funder ID: {$funder.funder_id|escape}<br>
-                            Submission ID: {$funder.submission_id|escape}<br>
+                            
                             Setting Value: {$funders.settings[$funder.funder_id]|escape}
                         </li>
                     {/if}
                 {/foreach}
             </ul>
             {if !$foundFunders}
-                <p>{translate key="Nenhum financiador encontrado."}</p>
+                <p>{translate key="plugins.block.fundingBlock.nofunding"}</p>
             {/if}
         {else}
-            <p>{translate key="Nenhum financiador encontrado."}</p>
+            <p>{translate key="plugins.block.fundingBlock.nofunding"}</p>
         {/if}
     {else}
         <p>{translate key="plugins.block.fundingBlock.noid"}</p>
