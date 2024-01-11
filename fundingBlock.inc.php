@@ -53,7 +53,7 @@ class fundingBlock extends BlockPlugin {
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             // Passo 1: Obter funders da tabela 'funders'
-            $queryFunders = "SELECT funder_id, submission_id FROM funders";
+            $queryFunders = "SELECT funder_id, submission_id, funder_identification FROM funders";
             $stmtFunders = $pdo->query($queryFunders);
             $funders = $stmtFunders->fetchAll(PDO::FETCH_ASSOC);
 
@@ -75,7 +75,7 @@ class fundingBlock extends BlockPlugin {
                 $awards[$funder['funder_id']] = implode(';', $awardNumbers);
             }
 
-            // Retornar um array contendo funders, settings e awards
+            // Retornar um array contendo funders, settings, awards e funder_identifications
             return ['funders' => $funders, 'settings' => $settings, 'awards' => $awards];
 
         } catch (PDOException $e) {
