@@ -28,3 +28,6 @@ msgstr "Sem ID disponível."
 
 msgid "plugins.block.fundingBlock.nofunding"
 msgstr "Nenhum financiador encontrado."
+
+msgid "plugins.block.fundingBlock.numberfunding"
+msgstr "Números do Financiamento: "

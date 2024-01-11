@@ -12,10 +12,8 @@ class fundingBlock extends BlockPlugin {
     private $databaseUsername;
     private $databasePassword;
 
-
 	public function getContents($templateMgr, $request = null)
     {
-
 		$configFile = 'config.inc.php';
 
         if (file_exists($configFile)) {
@@ -30,15 +28,12 @@ class fundingBlock extends BlockPlugin {
         }
 
 		// Chama a função para obter o número de revistas.
-         
-       
         $funders = $this->getFunders();
         
         $templateMgr->assign([
         // Variável com texto simples.
-        'madeByText' => 'Estatísticas do portal:',
+        //'madeByText' => 'Estatísticas do portal:',
         // Variável que contém o número de revistas.
-       
         'funders' => $funders, 
         
     ]);
@@ -46,43 +41,45 @@ class fundingBlock extends BlockPlugin {
     return parent::getContents($templateMgr, $request);
     }
 
+    //função responsável por obter os dados do banco
     public function getFunders()
     {
-        try {
-            $pdo = new PDO("mysql:host={$this->databaseHost};dbname={$this->databaseName}", $this->databaseUsername, $this->databasePassword);
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    try {
+        // Cria uma conexão com o banco de dados usando as configurações fornecidas
+        $pdo = new PDO("mysql:host={$this->databaseHost};dbname={$this->databaseName}", $this->databaseUsername, $this->databasePassword);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            // Passo 1: Obter funders da tabela 'funders'
-            $queryFunders = "SELECT funder_id, submission_id, funder_identification FROM funders";
-            $stmtFunders = $pdo->query($queryFunders);
-            $funders = $stmtFunders->fetchAll(PDO::FETCH_ASSOC);
+        // Passo 1: Obter funders da tabela 'funders'
+        $queryFunders = "SELECT funder_id, submission_id, funder_identification FROM funders";
+        $stmtFunders = $pdo->query($queryFunders);
+        $funders = $stmtFunders->fetchAll(PDO::FETCH_ASSOC);
 
-            // Passo 2: Obter settings da tabela 'funder_settings' usando os funder_ids obtidos anteriormente
-            $settings = [];
-            foreach ($funders as $funder) {
-                $querySettings = "SELECT setting_value FROM funder_settings WHERE funder_id = {$funder['funder_id']}";
-                $stmtSettings = $pdo->query($querySettings);
-                $settingValue = $stmtSettings->fetchColumn();
-                $settings[$funder['funder_id']] = $settingValue;
-            }
+        // Passo 2: Obter settings da tabela 'funder_settings' usando os funder_ids obtidos anteriormente
+        $settings = [];
+        foreach ($funders as $funder) {
+            $querySettings = "SELECT setting_value FROM funder_settings WHERE funder_id = {$funder['funder_id']}";
+            $stmtSettings = $pdo->query($querySettings);
+            $settingValue = $stmtSettings->fetchColumn();
+            $settings[$funder['funder_id']] = $settingValue;
+        }
 
-            // Passo 3: Obter Funder_award_numbers da tabela 'funder_awards' agrupados por 'funder_id'
-            $awards = [];
-            foreach ($funders as $funder) {
-                $queryAwards = "SELECT funder_award_number FROM funder_awards WHERE funder_id = {$funder['funder_id']}";
-                $stmtAwards = $pdo->query($queryAwards);
-                $awardNumbers = $stmtAwards->fetchAll(PDO::FETCH_COLUMN);
-                $awards[$funder['funder_id']] = implode(';', $awardNumbers);
-            }
+        // Passo 3: Obter Funder_award_numbers da tabela 'funder_awards' agrupados por 'funder_id'
+        $awards = [];
+        foreach ($funders as $funder) {
+            $queryAwards = "SELECT funder_award_number FROM funder_awards WHERE funder_id = {$funder['funder_id']}";
+            $stmtAwards = $pdo->query($queryAwards);
+            $awardNumbers = $stmtAwards->fetchAll(PDO::FETCH_COLUMN);
+            $awards[$funder['funder_id']] = implode(';', $awardNumbers);
+        }
 
-            // Retornar um array contendo funders, settings, awards e funder_identifications
-            return ['funders' => $funders, 'settings' => $settings, 'awards' => $awards];
+        // Retornar um array contendo funders, settings, awards e funder_identifications
+        return ['funders' => $funders, 'settings' => $settings, 'awards' => $awards];
 
         } catch (PDOException $e) {
-            return [];
-        }
+        // Em caso de erro, retorna um array vazio
+        return [];
     }
-
+    }
 
 //////funcoes obrigatorias do ojs
 	/**
