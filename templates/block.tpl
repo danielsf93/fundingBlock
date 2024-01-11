@@ -12,10 +12,9 @@
                         {assign var="foundFunders" value=true}
                         <li>
                             Submission ID: <b>{$funder.submission_id|escape}</b><br>
-
                             Funder ID: {$funder.funder_id|escape}<br>
-                            
-                            Setting Value: {$funders.settings[$funder.funder_id]|escape}
+                            Setting Value: {$funders.settings[$funder.funder_id]|escape}<br>
+                            Funder_award_number: {$funders.awards[$funder.funder_id]|escape}
                         </li>
                     {/if}
                 {/foreach}
