@@ -15,8 +15,8 @@
                             Funder ID: {$funder.funder_id|escape}<br>
                             Setting Value: {$funders.settings[$funder.funder_id]|escape}<br>
                             Funder_award_number: {$funders.awards[$funder.funder_id]|escape}<br>
-                            Funder_identification: {$funder.funder_identification|escape}
-                        </li>
+                            Funder_identification: {$funder.funder_identification|escape}<br>
+                            Link: <a href="https://search.crossref.org/funding?q={$funder.funder_identification|replace:'http://dx.doi.org/10.13039/':''|escape}" target="_blank">{$funders.settings[$funder.funder_id]|escape}</a>                        </li>
                     {/if}
                 {/foreach}
             </ul>
